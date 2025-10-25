@@ -1,0 +1,2 @@
+# Run backup every hour
+0 * * * * /usr/local/bin/command.sh >> /var/log/backup.log 2>&1
