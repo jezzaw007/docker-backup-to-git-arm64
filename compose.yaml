@@ -1,0 +1,30 @@
+version: "3.9"
+
+services:
+  git-backup-daily:
+    image: ghcr.io/<your-username>/docker-backup-to-git-arm64:latest
+    container_name: git-backup-daily
+    restart: unless-stopped
+    environment:
+      GIT_NAME: "${GIT_NAME_DAILY}"
+      GIT_EMAIL: "${GIT_EMAIL_DAILY}"
+      GIT_URL: "${GIT_URL_DAILY}"
+      CRON_SCHEDULE: "0 1 * * *"   # run daily at 1 AM UTC
+      TARGET_FOLDER: "/target"
+      GIT_BRANCH: "main"
+    volumes:
+      - /path/to/data:/target:ro
+
+  git-backup-monthly:
+    image: ghcr.io/<your-username>/docker-backup-to-git-arm64:latest
+    container_name: git-backup-monthly
+    restart: unless-stopped
+    environment:
+      GIT_NAME: "${GIT_NAME_MONTHLY}"
+      GIT_EMAIL: "${GIT_EMAIL_MONTHLY}"
+      GIT_URL: "${GIT_URL_MONTHLY}"
+      CRON_SCHEDULE: "0 3 1 * *"   # run monthly at 3 AM on the 1st
+      TARGET_FOLDER: "/target"
+      GIT_BRANCH: "main"
+    volumes:
+      - /path/to/data:/target:ro
